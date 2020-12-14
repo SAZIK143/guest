@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Main Page - Suduku</title>
+        <script src="./jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="generator.js"></script>
+        <link href="game-style.css" rel="stylesheet" />
+        <script src="./vue.min.js"></script>
+    </head>
+<body>
+
+<!-- <h1 id="status">Welcome to SUDUKU</h1><br> -->
+
+
+
+
+<br>
+<br>
+<!-- <a href="login.html" target="_blank" style="display:none"><button>Multiplayer</button></a> -->
+
+<div id="Game">
+
+    <div id="app-sudoku-guest">
+
+       <!-- <div class="buttons-container"> -->
+           <!-- <button class="button" id="getSudokuBtn" v-on:click="initializeGuestGame()"><span>{{ initializeGameText }}</span></button> -->
+           <!-- <button class="button" id="readyUpBtn" style="display:none" v-on:click="prepareGame()"><span>Join game</span></button> -->
+           <!-- <transition name="fade">
+               <button class="button" v-on:click="evaluateGame()" v-if="isGameStarted"><span>{{ evaluateGameText }}</span></button>
+           </transition> -->
+       <!-- </div> -->
+       <ul>
+         <li><a href="index.html">Home</a></li>
+         <li style="float:right"><a href="login.html">Sign In/Sign Up</a></li>
+       </ul>
+
+       <div class="buttons-container">
+           <button type="button" name="button" v-on:click="onRefresh()">Play!</button>
+       </div>
+
+       <transition name="fade">
+           <div class="grid-sudoku" id="sudokuGrid" v-if="isGameStarted && !showAnswer">
+
+               <div v-for="(row, row_id) in sudokuMatrix" class="grid-row">
+                   <div v-for="(cell, cell_id) in row" class="grid-cell" id="selectedRow">
+                        <div v-if="cell.st === 1"> <!-- 1(dane) 2(poprawne) 3(podpowiedz) 0(edycja) -->
+                            <input type="text" v-bind:key="row,cell" v-model="cell.num" class="grid-cell-filled" disabled/>
+                        </div>
+                        <div v-else-if="cell.st === 2">
+                            <input type="text" v-bind:key="row,cell" v-model="cell.num" class="grid-cell-correct" disabled/>
+                        </div>
+                        <div v-else-if="cell.st === 3">
+                            <input type="text" v-bind:key="row,cell" v-model="cell.num" class="grid-cell-hint" disabled/>
+                        </div>
+                        <div v-else>
+                            <input type="text" pattern="[1-9]{1}" v-on:click="selected = true" v-bind:key="row,cell" v-model="cell.num" v-on:keydown.enter="sendXY(row_id,cell_id,cell.num)" v-on:keydown.h="getHint(row_id,cell_id)" class="grid-cell-editor"/>
+                        </div>
+                   </div>
+               </div>
+           </div>
+           <div >
+
+           </div>
+       </transition><br>
+
+       <!-- <div class="hint-box" v-if="isGameStarted">
+           <div v-if="selected === true">
+               <button type="button" class="hint-button">Get Hint</button>
+           </div>
+
+       </div> -->
+
+       <div class="mistakes-box">
+           <div v-for="i in mistakes">
+               <p class="mistake-cross"> </p>
+           </div>
+       </div>
+
+       <transition name="fade">
+           <div v-if="showAnswer" class="answer">
+               <img v-bind:src="answerImage" class="answer-image" />
+           </div>
+       </transition>
+
+   </div>
+
+</div>
+
+<script src="app.js"></script>
+<script src="sudoku.js"></script>
+
+</body>
+</html>
