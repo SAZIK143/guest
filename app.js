@@ -91,7 +91,7 @@ var sudokuAppGuest = new Vue({
             }
 
             if (this.mistakes.length >= 3) {
-                this.answerImage = "think.gif";
+                this.answerImage = "wrong.png";
                 this.showAnswer = true;
                 this.isGameStarted = false;
                 this.mistakes = []
